@@ -64,18 +64,3 @@ def delete_contact(request, pk):
     response = HttpResponse(status=204)
     response["HX-Trigger"] = "contact-deleted"
     return response
-
-
-# views.py
-
-
-def create_admin(request):
-    # Only create if it doesn't exist
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create_superuser(
-            username="admin",  # Change if you want
-            email="admin@example.com",  # Change to your email
-            password="YourPassword123",  # Change to your password
-        )
-        return HttpResponse("Admin created! Delete this view immediately.")
-    return HttpResponse("Admin already exists. Delete this view immediately.")
