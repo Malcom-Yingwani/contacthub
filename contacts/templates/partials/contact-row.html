@@ -5,7 +5,7 @@
           
     <td>
         {% if contact.document %}
-            <a href="{% url 'download-document' contact.pk %}" class="btn btn-ghost btn-xs" target="_blank">
+            <a href="{{ contact.document.url }}" class="btn btn-ghost btn-xs" target="_blank">
                 Download Document
             </a>
         {% else %}

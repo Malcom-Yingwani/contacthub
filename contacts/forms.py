@@ -35,9 +35,11 @@ class ContactForm(forms.ModelForm):
         widget=forms.FileInput(
             attrs={
                 "class": "file-input file-input-bordered w-full",
+                "accept": ".pdf,.doc,.docx,.txt",
             }
         ),
         required=False,
+        help_text="Upload a document (PDF, DOC, DOCX, TXT)",
     )
 
     def clean_email(self):

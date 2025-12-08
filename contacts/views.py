@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from cloudinary.utils import cloudinary_url
 from django.views.decorators.http import require_http_methods
 
 
@@ -64,23 +63,3 @@ def delete_contact(request, pk):
     response = HttpResponse(status=204)
     response["HX-Trigger"] = "contact-deleted"
     return response
-
-
-@login_required
-def download_document(request, pk):
-    contact = get_object_or_404(Contact, pk=pk, user=request.user)
-
-    if not contact.document:
-        return HttpResponse("No document available", status=404)
-
-    # Generate a signed URL that will work
-    url, options = cloudinary_url(
-        contact.document.public_id,
-        resource_type="raw",
-        type="upload",
-        sign_url=True,
-        secure=True,
-        attachment=True,  # This forces download instead of opening in browser
-    )
-
-    return HttpResponseRedirect(url)
